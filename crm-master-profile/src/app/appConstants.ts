@@ -1,0 +1,4 @@
+export enum DRAWER_STATES {
+  'TOGGLED' = 'TOGGLED',
+  'EXPANDED' = 'EXPANDED',
+}
