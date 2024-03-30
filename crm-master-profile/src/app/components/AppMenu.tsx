@@ -31,6 +31,13 @@ const mainMenuItems: { label: string; icon?: ReactNode; to: string; subRoute?: s
     subRoute: '/registration/*',
   },
   {
+    label: 'Login',
+    // icon: <CampaignsIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
+    to: 'login',
+
+    subRoute: '/login/*',
+  },
+  {
     label: 'Feed',
     // icon: <CreativesIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
     to: 'feed',
