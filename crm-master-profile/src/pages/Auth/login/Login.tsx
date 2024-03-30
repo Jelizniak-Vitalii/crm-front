@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
 import LoginFormRender from './LoginFormRender.tsx';
 import { LoginPayload, useLoginMutation } from '../../../modules/Auth/AuthApi.ts';
@@ -31,6 +31,10 @@ const Login = () => {
 
             <Grid item xs={12}>
               <Form<LoginFormValues> onSubmit={handleSubmit} render={props => <LoginFormRender {...props} submitting={isLoadingLogin} />} />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Divider />
             </Grid>
 
             <Grid item xs={12}>

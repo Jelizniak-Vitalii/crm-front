@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
 import { RegistrationPayload, useRegisterMutation } from '../../../../modules/Auth/AuthApi.ts';
 import RegistrationFormRender from './RegistrationFormRender.tsx';
@@ -32,6 +32,10 @@ const Registration = () => {
 
             <Grid item xs={12}>
               <Form<RegistrationFormValues> onSubmit={handleSubmit} render={props => <RegistrationFormRender {...props} submitting={isLoadingRegister} />} />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Divider />
             </Grid>
 
             <Grid item xs={12}>
