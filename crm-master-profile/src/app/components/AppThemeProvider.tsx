@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { ReactNode } from 'react';
 
 const defaultTheme = createTheme({
-  palette: { mode: 'light' },
+  palette: { mode: 'dark' },
 });
 
 type AppThemeProvider = {

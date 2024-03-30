@@ -1,6 +1,6 @@
 import { DRAWER_STATES } from '../appConstants.ts';
 import { forwardRef, ReactNode } from 'react';
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { NavLink, NavLinkProps, useMatch } from 'react-router-dom';
 import { cx } from '@emotion/css';
 
@@ -16,36 +16,25 @@ export const DRAWER_WIDTH = {
 };
 
 //TODO: добавить иконки и убрать тип undefined
-const mainMenuItems: { label: string; icon?: ReactNode; to: string; roles?: string[]; subRoute?: string }[] = [
+const mainMenuItems: { label: string; icon?: ReactNode; to: string; subRoute?: string }[] = [
   {
     label: 'Dashboard',
-    // icon: <Icon/>,
+    // icon: <CreativesIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
     to: 'dashboard',
     subRoute: '/dashboard/*',
   },
   {
-    label: 'Calendar',
-    // icon: <Icon/>,
-    to: 'calendar',
-    subRoute: '/calendar/*',
+    label: 'Registration',
+    // icon: <CampaignsIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
+    to: 'registration',
+
+    subRoute: '/registration/*',
   },
   {
-    label: 'Orders',
-    // icon: <Icon/>,
-    to: 'orders',
-    subRoute: '/orders/*',
-  },
-  {
-    label: 'Services',
-    // icon: <Icon/>,
-    to: 'services',
-    subRoute: '/services/*',
-  },
-  {
-    label: 'Customers',
-    // icon: <Icon/>,
-    to: 'customers',
-    subRoute: '/customers/*',
+    label: 'Feed',
+    // icon: <CreativesIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
+    to: 'feed',
+    subRoute: '/feed/*',
   },
 ];
 
@@ -67,7 +56,7 @@ const AppMenu = () => {
   };
 
   const drawer = (
-    <List dense component="nav">
+    <List component="nav">
       {mainMenuItems.map(({ label, subRoute, to }) => (
         <ListItem key={label}>
           <ListItemButton component={ActiveNavLink} to={to} subRoute={subRoute} onClick={handleClickMenuItem(to)}>
@@ -80,20 +69,16 @@ const AppMenu = () => {
   );
 
   return (
-    <Box component="nav">
-      <Drawer
-        variant="permanent"
-        ModalProps={{
-          disablePortal: true,
-        }}
-        PaperProps={{
-          elevation: 0,
-        }}
-        open
-      >
-        {drawer}
-      </Drawer>
-    </Box>
+    <Drawer
+      variant="permanent"
+      sx={{
+        display: { xs: 'none', sm: 'block' },
+        '& .MuiDrawer-paper': { width: DRAWER_WIDTH.EXPANDED.sm },
+      }}
+      open
+    >
+      {drawer}
+    </Drawer>
   );
 };
 
