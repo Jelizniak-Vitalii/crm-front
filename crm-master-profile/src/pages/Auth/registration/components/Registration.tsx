@@ -3,6 +3,7 @@ import { Form } from 'react-final-form';
 import { RegistrationPayload, useRegisterMutation } from '../../../../modules/Auth/AuthApi.ts';
 import RegistrationFormRender from './RegistrationFormRender.tsx';
 import CustomNavLink from '../../../../shared/ui/CustomNavLink.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type RegistrationFormValues = {
   first_name?: string;
@@ -12,12 +13,17 @@ type RegistrationFormValues = {
 };
 
 const Registration = () => {
+  const navigate = useNavigate();
+
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
 
   const handleSubmit = async (values: RegistrationFormValues) => {
     if (values.password !== undefined && values.email !== undefined) {
-      await register(values as RegistrationPayload);
-      console.log('Успешно зарегался');
+      await register(values as RegistrationPayload)
+        .unwrap()
+        .then(() => {
+          navigate('/login', { replace: true });
+        });
     }
   };
 

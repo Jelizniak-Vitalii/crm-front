@@ -12,12 +12,16 @@ type LoginFormValues = {
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
 
   const handleSubmit = async (values: LoginFormValues) => {
     if (values.password !== undefined && values.email !== undefined) {
-      await login(values as LoginPayload).then(() => navigate('/dashboard', { replace: true }));
-      console.log('Успешно зарегался');
+      await login(values as LoginPayload)
+        .unwrap()
+        .then(() => {
+          navigate('/dashboard', { replace: true });
+        });
     }
   };
   return (
