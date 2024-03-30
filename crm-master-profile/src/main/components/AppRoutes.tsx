@@ -21,8 +21,8 @@ const AppRoutes = () => {
         />
         <Route index element={<Dashboard />} />
         <Route path="dashboard/*" element={<Dashboard />} />
-        <Route path="registration" element={<Registration />} />
-        <Route path="login" element={<Login />} />
+        <Route path="registration/*" element={<Registration />} />
+        <Route path="login/*" element={<Login />} />
         <Route path="feed/*" element={<Feed />} />
       </Route>
     </Routes>

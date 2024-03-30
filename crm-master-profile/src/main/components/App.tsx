@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import AppMenu, { DRAWER_WIDTH } from '../../app/components/AppMenu.tsx';
 import AppRoutes from './AppRoutes.tsx';
+import AppBar from '../../app/components/AppBar.tsx';
 import { makeStyles } from 'tss-react/mui';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../../pages/Auth/slice/userSlice.ts';
@@ -63,6 +64,8 @@ function App() {
           )}
 
           <Box className={classes.main}>
+            {isAuthenticated && <AppBar />}
+
             <Box className={classes.content}>
               <AppRoutes />
             </Box>

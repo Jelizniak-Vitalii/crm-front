@@ -3,6 +3,7 @@ import { Form } from 'react-final-form';
 import LoginFormRender from './LoginFormRender.tsx';
 import { LoginPayload, useLoginMutation } from '../../../modules/Auth/AuthApi.ts';
 import CustomNavLink from '../../../shared/ui/CustomNavLink.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type LoginFormValues = {
   email?: string;
@@ -10,11 +11,12 @@ type LoginFormValues = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
 
   const handleSubmit = async (values: LoginFormValues) => {
     if (values.password !== undefined && values.email !== undefined) {
-      await login(values as LoginPayload);
+      await login(values as LoginPayload).then(() => navigate('/dashboard', { replace: true }));
       console.log('Успешно зарегался');
     }
   };
