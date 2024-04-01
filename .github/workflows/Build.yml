@@ -35,5 +35,5 @@ jobs:
     steps:
       - name: Run command on remote server
         run: |
-          cd /public/crm-front/crm-master-profile
+          cd /public/crm-front
           bash build.sh
