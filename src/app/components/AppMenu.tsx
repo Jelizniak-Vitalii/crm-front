@@ -23,24 +23,6 @@ const mainMenuItems: { label: string; icon?: ReactNode; to: string; subRoute?: s
     to: 'dashboard',
     subRoute: '/dashboard/*',
   },
-  {
-    label: 'Registration',
-    // icon: <CampaignsIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
-    to: 'registration',
-    subRoute: '/registration/*',
-  },
-  {
-    label: 'Login',
-    // icon: <CampaignsIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
-    to: 'login',
-    subRoute: '/login/*',
-  },
-  {
-    label: 'Feed',
-    // icon: <CreativesIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
-    to: 'feed',
-    subRoute: '/feed/*',
-  },
 ];
 
 const ActiveNavLink = forwardRef<
@@ -56,15 +38,11 @@ const ActiveNavLink = forwardRef<
 });
 
 const AppMenu = () => {
-  const handleClickMenuItem = (to: string) => {
-    return () => console.log('to', to);
-  };
-
   const drawer = (
     <List component="nav">
       {mainMenuItems.map(({ label, subRoute, to }) => (
         <ListItem key={label}>
-          <ListItemButton component={ActiveNavLink} to={to} subRoute={subRoute} onClick={handleClickMenuItem(to)}>
+          <ListItemButton component={ActiveNavLink} to={to} subRoute={subRoute}>
             {/*<ListItemIcon >{icon}</ListItemIcon>*/}
             <ListItemText primary={label} />
           </ListItemButton>

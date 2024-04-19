@@ -1,9 +1,13 @@
 import React from 'react';
-import { AppBar as MuiAppBar, AppBarProps as MuiAppBarProps, Avatar, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar as MuiAppBar, AppBarProps as MuiAppBarProps, Avatar, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Skeleton, Toolbar, Typography } from '@mui/material';
 import { Logout, Menu as MenuIcon } from '@mui/icons-material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
 import { makeStyles } from 'tss-react/mui';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../pages/Auth/slice/userSlice.ts';
+import { useNavigate } from 'react-router-dom';
+import { useGetCurrentUserQuery } from '../../modules/User/UserApi.ts';
 
 const useStyles = makeStyles()(theme => ({
   switch: {
@@ -20,12 +24,17 @@ interface AppBarProps extends MuiAppBarProps {
 
 function AppBar({ children, onToggleDrawer }: AppBarProps) {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   // TODO: добавить данные юзера
   const user = {
     firstName: 'Vanya',
     lastName: 'moldovan',
   };
+
   const { classes } = useStyles();
+
+  const { data: currentUser, isFetching: isFetchingCurrentUser } = useGetCurrentUserQuery();
 
   const [avatarEl, setAvatarEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -38,6 +47,7 @@ function AppBar({ children, onToggleDrawer }: AppBarProps) {
   };
 
   const handleLogout = () => {
+    navigate('/login', { replace: true });
     localStorage.removeItem('token');
     dispatch(logout());
   };
@@ -55,12 +65,12 @@ function AppBar({ children, onToggleDrawer }: AppBarProps) {
           </Grid>
 
           <Grid item>
-            <Typography>{`${user.firstName} ${user.lastName}`}</Typography>
+            <Typography>{`${currentUser?.firstName} ${currentUser?.lastName}`}</Typography>
           </Grid>
 
           <Grid item>
             <IconButton onClick={handleAvatarClick}>
-              <Avatar variant="circular" />
+              {isFetchingCurrentUser ? <Skeleton variant="circular" animation="wave" width={40} height={40} /> : <Avatar variant="circular" />}
             </IconButton>
 
             <Menu
@@ -89,7 +99,22 @@ function AppBar({ children, onToggleDrawer }: AppBarProps) {
               {/*  </ListItemIcon>*/}
               {/*  <ListItemText>{t('DEFAULT:ACTION.SWITCH-LANGUAGE')}</ListItemText>*/}
               {/*</MenuItem>*/}
-              <MenuItem onClick={() => handleLogout()}>
+
+              <MenuItem key="profile" onClick={() => navigate('profile', { replace: true })}>
+                <ListItemIcon className={classes.listIcon}>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText>Мой профиль</ListItemText>
+              </MenuItem>
+
+              <MenuItem key="settings" onClick={() => navigate('settings', { replace: true })}>
+                <ListItemIcon className={classes.listIcon}>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText>Настройки</ListItemText>
+              </MenuItem>
+
+              <MenuItem key="logout" onClick={() => handleLogout()}>
                 <ListItemIcon className={classes.listIcon}>
                   <Logout />
                 </ListItemIcon>

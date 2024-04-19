@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery, FetchBaseQueryError, retry } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 
 const BASE_URL = 'http://195.133.79.233';
@@ -22,4 +22,10 @@ export const api = createApi({
   baseQuery: baseQueryWithRetry,
   refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
+  onError: (error: FetchBaseQueryError) => {
+    if (error.status === 401) {
+      // Перенаправляем пользователя на страницу логина
+      window.location.href = '/login';
+    }
+  },
 });

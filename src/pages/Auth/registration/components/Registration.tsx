@@ -6,8 +6,8 @@ import CustomNavLink from '../../../../shared/ui/CustomNavLink.tsx';
 import { useNavigate } from 'react-router-dom';
 
 type RegistrationFormValues = {
-  first_name?: string;
-  last_name?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
   password?: string;
 };

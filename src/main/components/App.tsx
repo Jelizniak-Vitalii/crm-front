@@ -10,6 +10,7 @@ import AppBar from '../../app/components/AppBar.tsx';
 import { makeStyles } from 'tss-react/mui';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../../pages/Auth/slice/userSlice.ts';
+import theme from '../../theme/theme.ts';
 
 const useStyles = makeStyles<{ isAuthenticated: boolean }>()((theme, { isAuthenticated }) => ({
   main: {
@@ -41,11 +42,12 @@ const useStyles = makeStyles<{ isAuthenticated: boolean }>()((theme, { isAuthent
 }));
 
 function App() {
-  const [mode] = useState<PaletteMode>('dark');
+  const [mode] = useState<PaletteMode>('light');
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const darkTheme = createTheme({
+    ...theme,
     palette: {
       mode: mode,
     },
@@ -54,7 +56,7 @@ function App() {
   const { classes } = useStyles({ isAuthenticated });
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Suspense fallback={null}>
         <BrowserRouter>
           {isAuthenticated && (

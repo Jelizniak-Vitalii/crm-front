@@ -13,7 +13,6 @@ type LoginFormValues = {
 const Login = () => {
   const navigate = useNavigate();
 
-
   const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
 
   const handleSubmit = async (values: LoginFormValues) => {
@@ -25,6 +24,7 @@ const Login = () => {
         });
     }
   };
+
   return (
     <Box display="flex" justifyContent="center" alignItems="center" height="100%">
       <Card raised sx={{ minWidth: 400 }}>

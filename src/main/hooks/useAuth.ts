@@ -9,6 +9,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
+      localStorage.removeItem('token');
       navigate('/login', { replace: true });
     }
   }, [isAuthenticated]);

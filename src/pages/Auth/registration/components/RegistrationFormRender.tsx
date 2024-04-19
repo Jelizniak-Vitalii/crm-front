@@ -17,7 +17,7 @@ const RegistrationFormRender = ({ handleSubmit }: FormRenderProps) => {
       <Grid container spacing={3} direction="column">
         <Grid item xs={12}>
           <Field
-            name="first_name"
+            name="firstName"
             render={props => (
               <TextField name={props.input.name} label="Имя" placeholder="Введите имя" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
             )}
@@ -26,7 +26,7 @@ const RegistrationFormRender = ({ handleSubmit }: FormRenderProps) => {
 
         <Grid item xs={12}>
           <Field
-            name="last_name"
+            name="lastName"
             render={props => (
               <TextField name={props.input.name} label="Фамилия" placeholder="Введите фамилию" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
             )}
