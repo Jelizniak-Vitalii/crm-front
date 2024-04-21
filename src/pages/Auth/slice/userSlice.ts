@@ -13,14 +13,16 @@ interface InitialState {
 const token = localStorage.getItem('token');
 
 const initialState: InitialState = {
-  isAuthenticated: !!token,
+  isAuthenticated: Boolean(token),
 };
 
 const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout: () => initialState,
+    logout: state => {
+      state.isAuthenticated = false;
+    },
   },
   extraReducers: builder => {
     builder.addMatcher(AuthApi.endpoints.login.matchFulfilled, (state, action) => {

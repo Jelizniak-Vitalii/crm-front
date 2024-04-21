@@ -29,9 +29,9 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
   const { data: currentUser, isFetching: isFetchingCurrentUser } = useGetCurrentUserQuery();
 
   const handleLogout = () => {
+    dispatch(logout());
     navigate('/login', { replace: true });
     localStorage.removeItem('token');
-    dispatch(logout());
   };
 
   return (
