@@ -3,7 +3,10 @@ import { User } from './types/user.ts';
 
 export type UserResponse = User;
 
-export type UpdateUserProfilePayload = Pick<User, 'firstName' | 'lastName' | 'phone' | 'id'>;
+export type UpdateUserProfilePayload = Pick<User, 'firstName' | 'lastName' | 'phone' | 'id'> & {
+  city?: string;
+  address?: string;
+};
 
 export const UserApi = api.injectEndpoints({
   endpoints: builder => ({

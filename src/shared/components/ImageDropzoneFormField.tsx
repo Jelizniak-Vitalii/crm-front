@@ -12,10 +12,10 @@ interface ImageDropzoneFieldProps extends FieldRenderProps<string, HTMLElement> 
 const useStyles = makeStyles()(() => ({
   avatar: {
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   inputWrapper: {
     border: '1px dashed black',
@@ -23,11 +23,11 @@ const useStyles = makeStyles()(() => ({
     cursor: 'pointer',
     width: '100px',
     height: '100px',
-    borderRadius: '50%'
-  }
+    borderRadius: '50%',
+  },
 }));
 
-const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChange }, meta: { touched, error } }) => {
+const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChange, value }, meta: { touched, error } }) => {
   const { classes } = useStyles();
 
   const onDrop = React.useCallback(
@@ -79,7 +79,7 @@ const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChan
       <FormControl fullWidth error={touched && !!error}>
         <div {...getRootProps()} className={classes.inputWrapper}>
           <input {...getInputProps()} />
-          <Avatar className={classes.avatar} src="/static/images/avatar/1.jpg" />
+          <Avatar className={classes.avatar} src={value ?? ''} />
         </div>
         {touched && error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>

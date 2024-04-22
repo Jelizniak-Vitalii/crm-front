@@ -5,5 +5,7 @@ export type User = {
   phone: string;
   firstName: string;
   lastName: string;
+  city?: string;
+  address?: string | null;
   role_id: number;
 };

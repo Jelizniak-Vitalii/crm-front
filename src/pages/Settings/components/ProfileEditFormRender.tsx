@@ -1,15 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField
-} from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { Field, FormRenderProps } from 'react-final-form';
 import { Box } from '@mui/system';
 import ImageDropzoneField from '../../../shared/components/ImageDropzoneFormField.tsx';
@@ -27,7 +16,7 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
 
   const resetImg = () => {
     form.change('userImg', '');
-  }
+  };
 
   return (
     <form noValidate onSubmit={handleSubmit}>
@@ -78,6 +67,24 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
                   onChange={props.input.onChange}
                   {...props}
                 />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Field
+              name="city"
+              render={props => (
+                <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Field
+              name="address"
+              render={props => (
+                <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
               )}
             />
           </Grid>
@@ -155,7 +162,10 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
             <Field
               name="active"
               render={props => (
-                <FormControlLabel label="Профиль активен" control={<Checkbox name={props.input.name} defaultChecked color="success" onChange={props.input.onChange} />} />
+                <FormControlLabel
+                  label="Профиль активен"
+                  control={<Checkbox checked={props.input.value} name={props.input.name} color="success" onChange={props.input.onChange} {...props} />}
+                />
               )}
             />
           </Grid>
