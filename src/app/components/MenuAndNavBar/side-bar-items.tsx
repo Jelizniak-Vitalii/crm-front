@@ -7,9 +7,10 @@ import Stack from '@mui/material/Stack';
 import { NavIcons, navIcons } from './nav-icons.tsx';
 
 const sideMenuItems: SideMenuItem[] = [
-  { key: 'dashboard', title: 'Dashboard', href: '/dashboard', icon: NavIcons.ChartPie },
-  { key: 'profile', title: 'Profile', href: '/profile', icon: NavIcons.User },
-  { key: 'settings', title: 'Settings', href: '/settings', icon: NavIcons.GearSix }
+  { key: 'dashboard', title: 'Главная', href: '/dashboard', icon: NavIcons.ChartPie },
+  { key: 'services', title: 'Услуги', href: '/services', icon: NavIcons.Services },
+  // { key: 'profile', title: 'Профиль', href: '/profile', icon: NavIcons.User },
+  // { key: 'settings', title: 'Settings', href: '/settings', icon: NavIcons.GearSix },
 ];
 
 interface SideMenuItem {
@@ -34,12 +35,12 @@ function NavItem({ disabled, external, href, icon, pathname, title }: SideMenuIt
       <Box
         {...(href
           ? {
-            component: external ? 'a' : NavLink,
-            href,
-            target: external ? '_blank' : undefined,
-            rel: external ? 'noreferrer' : undefined,
-            to: href
-          }
+              component: external ? 'a' : NavLink,
+              href,
+              target: external ? '_blank' : undefined,
+              rel: external ? 'noreferrer' : undefined,
+              to: href,
+            }
           : { role: 'button' })}
         sx={{
           alignItems: 'center',
@@ -57,9 +58,9 @@ function NavItem({ disabled, external, href, icon, pathname, title }: SideMenuIt
             bgcolor: 'var(--NavItem-disabled-background)',
             color: 'var(--NavItem-disabled-color)',
             cursor: 'not-allowed',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
           }),
-          ...(active && { bgcolor: 'var(--NavItem-active-background)', color: 'var(--NavItem-active-color)' })
+          ...(active && { bgcolor: 'var(--NavItem-active-background)', color: 'var(--NavItem-active-color)' }),
         }}
       >
         <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', flex: '0 0 auto' }}>

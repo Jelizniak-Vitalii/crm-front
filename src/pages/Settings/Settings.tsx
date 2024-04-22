@@ -1,5 +1,5 @@
 import Page from '../../shared/ui/Page.tsx';
-import { Card, Grid, Paper, Tab, Tabs } from '@mui/material';
+import { Card, Grid, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import ProfileEditForm from './components/ProfileEditForm.tsx';
 

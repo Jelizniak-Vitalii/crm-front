@@ -7,6 +7,7 @@ import Login from '../../pages/Auth/login/Login.tsx';
 import { useAuth } from '../hooks/useAuth.ts';
 import Profile from '../../pages/Profile/Profile.tsx';
 import Settings from '../../pages/Settings/Settings.tsx';
+import Services from '../../pages/Services/Services.tsx';
 
 const AppRoutes = () => {
   useAuth();
@@ -25,6 +26,7 @@ const AppRoutes = () => {
         <Route path="dashboard/*" element={<Dashboard />} />
         <Route path="profile/*" element={<Profile />} />
         <Route path="settings/*" element={<Settings />} />
+        <Route path="services/*" element={<Services />} />
         <Route path="registration/*" element={<Registration />} />
         <Route path="login/*" element={<Login />} />
         <Route path="feed/*" element={<Feed />} />

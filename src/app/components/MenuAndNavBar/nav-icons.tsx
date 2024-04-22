@@ -5,6 +5,7 @@ import { PlugsConnected as PlugsConnectedIcon } from '@phosphor-icons/react/dist
 import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
 import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare';
+import { RocketLaunch } from '@phosphor-icons/react';
 
 export enum NavIcons {
   User = 'user',
@@ -12,7 +13,8 @@ export enum NavIcons {
   ChartPie = 'chart-pie',
   GearSix = 'gear-six',
   PlusConnected = 'plugs-connected',
-  XSquare = 'x-square'
+  XSquare = 'x-square',
+  Services = 'servies',
 }
 
 export const navIcons: Record<NavIcons, Icon> = {
@@ -21,5 +23,6 @@ export const navIcons: Record<NavIcons, Icon> = {
   [NavIcons.PlusConnected]: PlugsConnectedIcon,
   [NavIcons.XSquare]: XSquare,
   [NavIcons.User]: UserIcon,
-  [NavIcons.Users]: UsersIcon
+  [NavIcons.Users]: UsersIcon,
+  [NavIcons.Services]: RocketLaunch,
 };

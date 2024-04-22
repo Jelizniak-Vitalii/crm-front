@@ -8,9 +8,6 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../Auth/slice/userSlice.ts';
 
 const useStyles = makeStyles()(() => ({
-  containerContent: {
-    position: 'relative',
-  },
   paper: {
     color: 'inherit',
     overflow: 'visible',
