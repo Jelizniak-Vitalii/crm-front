@@ -66,6 +66,8 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
           Settings
         </MenuItem>
 
+        <Divider />
+
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <SignOutIcon fontSize="var(--icon-fontSize-md)" />
