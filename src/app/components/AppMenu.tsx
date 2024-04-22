@@ -1,67 +1,56 @@
-import { DRAWER_STATES } from '../appConstants.ts';
-import { forwardRef, ReactNode } from 'react';
-import { Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { NavLink, NavLinkProps, useMatch } from 'react-router-dom';
-import { cx } from '@emotion/css';
+import Box from '@mui/material/Box';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { MainNav } from './MenuAndNavBar/main-nav.tsx';
+import AppRoutes from '../../main/components/AppRoutes.tsx';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from '../../pages/Auth/slice/userSlice.ts';
+import { makeStyles } from 'tss-react/mui';
+import { SideBar } from './MenuAndNavBar/side-bar.tsx';
 
-export const DRAWER_WIDTH = {
-  [DRAWER_STATES.TOGGLED]: {
-    sm: 80,
-    md: 80,
+const useStyles = makeStyles()(() => ({
+  main: {
+    height: '100%',
   },
-  [DRAWER_STATES.EXPANDED]: {
-    sm: 240,
-    md: 300,
-  },
-};
-
-//TODO: добавить иконки и убрать тип undefined
-const mainMenuItems: { label: string; icon?: ReactNode; to: string; subRoute?: string }[] = [
-  {
-    label: 'Dashboard',
-    // icon: <CreativesIcon height={ICON_HEIGHT} width={ICON_WIDTH} />,
-    to: 'dashboard',
-    subRoute: '/dashboard/*',
-  },
-];
-
-const ActiveNavLink = forwardRef<
-  HTMLAnchorElement,
-  NavLinkProps & {
-    subRoute?: string;
-  }
->(function SelectableNavLink({ className, subRoute, ...props }, ref) {
-  const match = useMatch(subRoute ?? '');
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return <NavLink ref={ref} {...props} className={({ isActive }) => (isActive || (subRoute && match) ? cx(className, 'Mui-selected') : className)} />;
-});
+}));
 
 const AppMenu = () => {
-  const drawer = (
-    <List component="nav">
-      {mainMenuItems.map(({ label, subRoute, to }) => (
-        <ListItem key={label}>
-          <ListItemButton component={ActiveNavLink} to={to} subRoute={subRoute}>
-            {/*<ListItemIcon >{icon}</ListItemIcon>*/}
-            <ListItemText primary={label} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-  );
+  const { classes } = useStyles();
+
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        display: { xs: 'none', sm: 'block' },
-        '& .MuiDrawer-paper': { width: DRAWER_WIDTH.EXPANDED.sm },
-      }}
-      open
-    >
-      {drawer}
-    </Drawer>
+    <>
+      <GlobalStyles
+        styles={{
+          body: {
+            '--MainNav-height': '56px',
+            '--MainNav-zIndex': 1000,
+            '--SideNav-width': '280px',
+            '--SideNav-zIndex': 1100,
+            '--MobileNav-width': '320px',
+            '--MobileNav-zIndex': 1100,
+          }
+        }}
+      />
+      <Box
+        sx={{
+          bgcolor: 'var(--mui-palette-background-default)',
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+          minHeight: '100%',
+          height: '100%'
+        }}
+      >
+        {isAuthenticated && <SideBar />}
+        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: isAuthenticated && 'var(--SideNav-width)' } }}>
+          {isAuthenticated && <MainNav />}
+          <main className={classes.main}>
+            <AppRoutes />
+          </main>
+        </Box>
+      </Box>
+    </>
   );
 };
 

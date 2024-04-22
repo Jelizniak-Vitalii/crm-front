@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '../../app/theme-provider.tsx';
-import AppNewMenu from '../../app/components/AppNewMenu.tsx';
+import AppMenu from '../../app/components/AppMenu.tsx';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Suspense fallback={null}>
         <BrowserRouter>
           <Routes>
-            <Route path="/*" element={<AppNewMenu />} />
+            <Route path="/*" element={<AppMenu />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
