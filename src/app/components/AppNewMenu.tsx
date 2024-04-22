@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { MainNav } from './MenuAndNavBar/main-nav.tsx';
-import { SideNav } from './MenuAndNavBar/side-nav.tsx';
 import AppRoutes from '../../main/components/AppRoutes.tsx';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../../pages/Auth/slice/userSlice.ts';
 import { makeStyles } from 'tss-react/mui';
+import { SideBar } from './MenuAndNavBar/side-bar.tsx';
 
 const useStyles = makeStyles()(() => ({
   main: {
@@ -29,7 +29,7 @@ const AppNewMenu = () => {
             '--SideNav-zIndex': 1100,
             '--MobileNav-width': '320px',
             '--MobileNav-zIndex': 1100,
-          },
+          }
         }}
       />
       <Box
@@ -39,15 +39,14 @@ const AppNewMenu = () => {
           flexDirection: 'column',
           position: 'relative',
           minHeight: '100%',
+          height: '100%'
         }}
       >
-        {isAuthenticated && <SideNav />}
+        {isAuthenticated && <SideBar />}
         <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: isAuthenticated && 'var(--SideNav-width)' } }}>
           {isAuthenticated && <MainNav />}
           <main className={classes.main}>
-            {/*<Container maxWidth="xl" sx={{ height: '100vh' }}>*/}
             <AppRoutes />
-            {/*</Container>*/}
           </main>
         </Box>
       </Box>

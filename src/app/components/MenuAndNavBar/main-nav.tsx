@@ -10,9 +10,9 @@ import { List as ListIcon } from '@phosphor-icons/react/dist/ssr/List';
 import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
 import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 
-import { MobileNav } from './mobile-nav';
 import { UserPopover } from './user-popover';
 import { usePopover } from '../../../hooks/use-popover.ts';
+import { SideBarMobile } from './side-bar-mobile.tsx';
 
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
@@ -67,7 +67,7 @@ export function MainNav(): React.JSX.Element {
 
       <UserPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
 
-      <MobileNav
+      <SideBarMobile
         onClose={() => {
           setOpenNav(false);
         }}

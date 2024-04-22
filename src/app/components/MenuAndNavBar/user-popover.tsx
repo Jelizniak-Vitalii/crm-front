@@ -52,18 +52,18 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       <Divider />
 
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem component={NavLink} to="/settings" onClick={onClose}>
-          <ListItemIcon>
-            <GearSixIcon fontSize="var(--icon-fontSize-md)" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-
         <MenuItem component={NavLink} to="profile" onClick={onClose}>
           <ListItemIcon>
             <UserIcon fontSize="var(--icon-fontSize-md)" />
           </ListItemIcon>
           Профиль
+        </MenuItem>
+
+        <MenuItem component={NavLink} to="/settings" onClick={onClose}>
+          <ListItemIcon>
+            <GearSixIcon fontSize="var(--icon-fontSize-md)" />
+          </ListItemIcon>
+          Settings
         </MenuItem>
 
         <MenuItem onClick={handleLogout}>
