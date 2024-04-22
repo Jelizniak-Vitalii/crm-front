@@ -13,9 +13,13 @@ import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 import { UserPopover } from './user-popover';
 import { usePopover } from '../../../hooks/use-popover.ts';
 import { SideBarMobile } from './side-bar-mobile.tsx';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../../pages/Auth/slice/userSlice.ts';
 
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
+
+  const currentUser = useSelector(selectCurrentUser);
 
   const userPopover = usePopover<HTMLDivElement>();
 
@@ -60,7 +64,13 @@ export function MainNav(): React.JSX.Element {
                 </IconButton>
               </Badge>
             </Tooltip>
-            <Avatar onClick={userPopover.handleOpen} ref={userPopover.anchorRef} src="/assets/avatar.png" sx={{ cursor: 'pointer' }} />
+            <Avatar
+              ref={userPopover.anchorRef}
+              alt="avatar"
+              onClick={userPopover.handleOpen}
+              src={currentUser?.userImg ?? '/assets/avatar.png'}
+              sx={{ width: 40, height: 40, cursor: 'pointer' }}
+            />
           </Stack>
         </Stack>
       </Box>
