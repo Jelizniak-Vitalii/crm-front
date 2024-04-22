@@ -4,10 +4,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { isNavItemActive } from '../../../lib/is-nav-item-active.ts';
 import { NavIcons, navIcons } from './nav-icons.tsx';
 
-const sideMenuItems = [
+const sideMenuItems: SideMenuItem[] = [
   { key: 'dashboard', title: 'Dashboard', href: '/dashboard', icon: NavIcons.ChartPie },
   { key: 'profile', title: 'Profile', href: '/profile', icon: NavIcons.User },
   { key: 'settings', title: 'Settings', href: '/settings', icon: NavIcons.GearSix }
@@ -18,17 +17,16 @@ interface SideMenuItem {
   title: string;
   href: string;
   icon: NavIcons;
+  disabled?: boolean;
+  external?: boolean;
 }
 
 interface SideMenuItemProps extends SideMenuItem {
   pathname: string;
-  disabled?: boolean;
-  external?: boolean;
-  matcher?: string;
 }
 
-function NavItem({ disabled, external, href, icon, matcher, pathname, title }: SideMenuItemProps): React.JSX.Element {
-  const active = isNavItemActive({ disabled, external, href, matcher, pathname });
+function NavItem({ disabled, external, href, icon, pathname, title }: SideMenuItemProps): React.JSX.Element {
+  const active = !disabled && pathname === href;
   const Icon = icon ? navIcons[icon] : null;
 
   return (
@@ -59,6 +57,7 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: S
             bgcolor: 'var(--NavItem-disabled-background)',
             color: 'var(--NavItem-disabled-color)',
             cursor: 'not-allowed',
+            pointerEvents: 'none'
           }),
           ...(active && { bgcolor: 'var(--NavItem-active-background)', color: 'var(--NavItem-active-color)' })
         }}

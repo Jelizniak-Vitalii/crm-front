@@ -9,12 +9,12 @@ import Typography from '@mui/material/Typography';
 import { GearSix as GearSixIcon } from '@phosphor-icons/react/dist/ssr/GearSix';
 import { SignOut as SignOutIcon } from '@phosphor-icons/react/dist/ssr/SignOut';
 import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
+import { Spinner } from '@phosphor-icons/react';
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../pages/Auth/slice/userSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useGetCurrentUserQuery } from '../../../modules/User/UserApi.ts';
-import { Spinner } from '@phosphor-icons/react';
 
 export interface UserPopoverProps {
   anchorEl: Element | null;
