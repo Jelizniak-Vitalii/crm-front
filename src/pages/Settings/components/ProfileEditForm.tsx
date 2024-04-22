@@ -20,6 +20,10 @@ const ProfileEditForm = () => {
         lastName: currentUser.lastName,
         phone: currentUser.phone,
         email: currentUser.email,
+        active: currentUser.active,
+        city: currentUser.city,
+        address: currentUser.address,
+        userImg: currentUser.userImg
       };
     }
 

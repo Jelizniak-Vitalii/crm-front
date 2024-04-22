@@ -30,7 +30,6 @@ export function SideBarMobile({ open, onClose }: MobileNavProps): React.JSX.Elem
           maxWidth: '100%',
           scrollbarWidth: 'none',
           width: 'var(--MobileNav-width)',
-          zIndex: 'var(--MobileNav-zIndex)',
           '&::-webkit-scrollbar': { display: 'none' },
         },
       }}

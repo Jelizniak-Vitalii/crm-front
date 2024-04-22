@@ -1,27 +1,45 @@
 import React from 'react';
 import { useDropzone, DropzoneOptions, FileRejection } from 'react-dropzone';
 import { FieldRenderProps } from 'react-final-form';
-import { FormControl, FormHelperText, InputLabel, Box } from '@mui/material';
+import { FormControl, FormHelperText, Box, Avatar } from '@mui/material';
 import ImageCompressor from 'image-compressor.js';
+import { makeStyles } from 'tss-react/mui';
 
 interface ImageDropzoneFieldProps extends FieldRenderProps<string, HTMLElement> {
   labelText?: string;
 }
 
-const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChange }, meta: { touched, error }, labelText = '' }) => {
+const useStyles = makeStyles()(() => ({
+  avatar: {
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    width: '100%',
+    height: '100%'
+  },
+  inputWrapper: {
+    border: '1px dashed black',
+    padding: '5px',
+    cursor: 'pointer',
+    width: '100px',
+    height: '100px',
+    borderRadius: '50%'
+  }
+}));
+
+const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChange }, meta: { touched, error } }) => {
+  const { classes } = useStyles();
+
   const onDrop = React.useCallback(
     async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      if (fileRejections.length > 0) {
-        // Обработка ошибок загрузки файлов, если это необходимо
+      const file = acceptedFiles?.[0];
+
+      if (fileRejections.length > 0 || !acceptedFiles[0]) {
         console.error('Error uploading files:', fileRejections);
         return;
       }
 
-      const file = acceptedFiles[0];
-      if (!file) return;
-
       try {
-        // Создаем экземпляр сжатия изображения
         const compressedFile = await new ImageCompressor(file, {
           quality: 0.2, // Устанавливаем качество сжатия (от 0 до 1)
           maxWidth: 600, // Устанавливаем максимальную ширину изображения
@@ -44,7 +62,13 @@ const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChan
   );
 
   const dropzoneOptions: DropzoneOptions = {
-    accept: 'image/*',
+    accept: {
+      'image/jpeg': [],
+      'image/png': [],
+      'image/webp': [],
+      'image/heic': [],
+      'image/jfif': [],
+    },
     onDrop,
   };
 
@@ -53,10 +77,9 @@ const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChan
   return (
     <Box mt={2}>
       <FormControl fullWidth error={touched && !!error}>
-        <InputLabel>{labelText}</InputLabel>
-        <div {...getRootProps()} style={{ border: '1px dashed black', padding: '20px', cursor: 'pointer' }}>
+        <div {...getRootProps()} className={classes.inputWrapper}>
           <input {...getInputProps()} />
-          <p>Перетащите сюда изображение или кликните на область</p>
+          <Avatar className={classes.avatar} src="/static/images/avatar/1.jpg" />
         </div>
         {touched && error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>

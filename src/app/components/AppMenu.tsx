@@ -10,6 +10,7 @@ import { SideBar } from './MenuAndNavBar/side-bar.tsx';
 const useStyles = makeStyles()(() => ({
   main: {
     height: '100%',
+    overflow: 'scroll'
   },
 }));
 
@@ -24,26 +25,23 @@ const AppMenu = () => {
         styles={{
           body: {
             '--MainNav-height': '56px',
-            '--MainNav-zIndex': 1000,
-            '--SideNav-width': '280px',
-            '--SideNav-zIndex': 1100,
+            '--SideNav-width': '230px',
             '--MobileNav-width': '320px',
-            '--MobileNav-zIndex': 1100,
           }
         }}
       />
       <Box
         sx={{
+          // bgcolor: 'var(--mui-palette-common-white)',
           bgcolor: 'var(--mui-palette-background-default)',
           display: 'flex',
-          flexDirection: 'column',
           position: 'relative',
           minHeight: '100%',
           height: '100%'
         }}
       >
         {isAuthenticated && <SideBar />}
-        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: isAuthenticated && 'var(--SideNav-width)' } }}>
+        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column' }}>
           {isAuthenticated && <MainNav />}
           <main className={classes.main}>
             <AppRoutes />

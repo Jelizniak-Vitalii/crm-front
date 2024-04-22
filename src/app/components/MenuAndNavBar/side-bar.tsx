@@ -7,7 +7,7 @@ export function SideBar(): React.JSX.Element {
   return (
     <Box
       sx={{
-        '--SideNav-background': 'var(--mui-palette-neutral-950)',
+        '--SideNav-background': 'var(--mui-palette-common-white)',
         '--SideNav-color': 'var(--mui-palette-common-white)',
         '--NavItem-color': 'var(--mui-palette-neutral-300)',
         '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
@@ -18,17 +18,14 @@ export function SideBar(): React.JSX.Element {
         '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
         '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
         bgcolor: 'var(--SideNav-background)',
+        borderRight: '1px solid var(--mui-palette-neutral-200)',
         color: 'var(--SideNav-color)',
         display: { xs: 'none', lg: 'flex' },
         flexDirection: 'column',
-        position: 'fixed',
-        top: 0,
-        left: 0,
         height: '100%',
         width: 'var(--SideNav-width)',
         maxWidth: '100%',
         scrollbarWidth: 'none',
-        zIndex: 'var(--SideNav-zIndex)',
         '&::-webkit-scrollbar': { display: 'none' },
       }}
     >

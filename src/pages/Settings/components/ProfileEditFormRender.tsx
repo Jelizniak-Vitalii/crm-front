@@ -1,11 +1,22 @@
-import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField
+} from '@mui/material';
 import { Field, FormRenderProps } from 'react-final-form';
 import { Box } from '@mui/system';
 import ImageDropzoneField from '../../../shared/components/ImageDropzoneFormField.tsx';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import React from 'react';
 
-const ProfileEditFormRender = ({ handleSubmit }: FormRenderProps) => {
+const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
@@ -14,12 +25,25 @@ const ProfileEditFormRender = ({ handleSubmit }: FormRenderProps) => {
     event.preventDefault();
   };
 
+  const resetImg = () => {
+    form.change('userImg', '');
+  }
+
   return (
     <form noValidate onSubmit={handleSubmit}>
-      <Box maxWidth="300px">
+      <Box maxWidth="400px">
         <Grid container spacing={3} direction="column">
-          <Grid item xs={12}>
-            <Field name="userImg" component={ImageDropzoneField} />
+          <Grid item>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <Field name="userImg" component={ImageDropzoneField} />
+              </Grid>
+              <Grid item>
+                <Button variant="outlined" type="button" size="small" onClick={resetImg}>
+                  Удалить
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>
@@ -83,6 +107,24 @@ const ProfileEditFormRender = ({ handleSubmit }: FormRenderProps) => {
 
           <Grid item xs={12}>
             <Field
+              name="city"
+              render={props => (
+                <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Field
+              name="address"
+              render={props => (
+                <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Field
               name="password"
               render={props => (
                 <FormControl variant="outlined" size="small" fullWidth>
@@ -105,6 +147,15 @@ const ProfileEditFormRender = ({ handleSubmit }: FormRenderProps) => {
                     }
                   />
                 </FormControl>
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Field
+              name="active"
+              render={props => (
+                <FormControlLabel label="Профиль активен" control={<Checkbox name={props.input.name} defaultChecked color="success" onChange={props.input.onChange} />} />
               )}
             />
           </Grid>

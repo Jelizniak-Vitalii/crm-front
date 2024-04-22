@@ -23,7 +23,7 @@ const Page = ({ children, title, goBack, isLoading, loader }: PageProps) => {
 
   return (
     <Box className={classes.pageContent}>
-      <Grid container spacing={3} paddingTop={5} paddingLeft={5} paddingRight={5}>
+      <Grid paddingTop={3} paddingLeft={3} paddingRight={3}>
         <Grid item xs={12}>
           <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
             {goBack && (
@@ -34,7 +34,7 @@ const Page = ({ children, title, goBack, isLoading, loader }: PageProps) => {
               </Grid>
             )}
 
-            <Grid item>
+            <Grid item marginBottom={3}>
               <Typography variant="h3">{title}</Typography>
             </Grid>
           </Grid>
