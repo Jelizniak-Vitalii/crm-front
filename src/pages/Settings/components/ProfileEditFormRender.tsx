@@ -20,7 +20,7 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
 
   return (
     <form noValidate onSubmit={handleSubmit}>
-      <Box maxWidth="400px">
+      <Box maxWidth="800px">
         <Grid container spacing={3} direction="column">
           <Grid item>
             <Grid container spacing={2} alignItems="center">
@@ -35,99 +35,115 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Field
-              name="firstName"
-              render={props => (
-                <TextField name={props.input.name} label="Имя" placeholder="Введите имя" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Field
-              name="lastName"
-              render={props => (
-                <TextField name={props.input.name} label="Фамилия" placeholder="Введите фамилию" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Field
-              name="email"
-              render={props => (
-                <TextField
-                  name={props.input.name}
-                  label="Электронная почта"
-                  placeholder="Введите email"
-                  size="small"
-                  fullWidth
-                  value={props.input.value}
-                  onChange={props.input.onChange}
-                  {...props}
+          <Grid item>
+            <Grid container direction="row" spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="firstName"
+                  render={props => (
+                    <TextField name={props.input.name} label="Имя" placeholder="Введите имя" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
                 />
-              )}
-            />
-          </Grid>
+              </Grid>
 
-          <Grid item xs={12}>
-            <Field
-              name="city"
-              render={props => (
-                <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Field
-              name="address"
-              render={props => (
-                <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Field
-              name="phone"
-              render={props => (
-                <TextField
-                  name={props.input.name}
-                  label="Контактный номер"
-                  placeholder="Введите номер телефона"
-                  inputProps={{
-                    maxLength: 10, // Максимальная длина ввода
-                    pattern: '[0-9]*', // Шаблон для ограничения ввода только цифрами
-                    inputMode: 'numeric', // Режим ввода, чтобы отображать числовую клавиатуру на мобильных устройствах
-                  }}
-                  size="small"
-                  fullWidth
-                  value={props.input.value}
-                  onChange={props.input.onChange}
-                  {...props}
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="lastName"
+                  render={props => (
+                    <TextField name={props.input.name} label="Фамилия" placeholder="Введите фамилию" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
                 />
-              )}
-            />
+              </Grid>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Field
-              name="city"
-              render={props => (
-                <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
+          <Grid item>
+            <Grid container direction="row" spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="email"
+                  render={props => (
+                    <TextField
+                      name={props.input.name}
+                      label="Электронная почта"
+                      placeholder="Введите email"
+                      size="small"
+                      fullWidth
+                      value={props.input.value}
+                      onChange={props.input.onChange}
+                      {...props}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="city"
+                  render={props => (
+                    <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
+                />
+              </Grid>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Field
-              name="address"
-              render={props => (
-                <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-              )}
-            />
+          <Grid item>
+            <Grid container direction="row" spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="address"
+                  render={props => (
+                    <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="phone"
+                  render={props => (
+                    <TextField
+                      name={props.input.name}
+                      label="Контактный номер"
+                      placeholder="Введите номер телефона"
+                      inputProps={{
+                        maxLength: 10, // Максимальная длина ввода
+                        pattern: '[0-9]*', // Шаблон для ограничения ввода только цифрами
+                        inputMode: 'numeric', // Режим ввода, чтобы отображать числовую клавиатуру на мобильных устройствах
+                      }}
+                      size="small"
+                      fullWidth
+                      value={props.input.value}
+                      onChange={props.input.onChange}
+                      {...props}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item>
+            <Grid container direction="row" spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="city"
+                  render={props => (
+                    <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="address"
+                  render={props => (
+                    <TextField name={props.input.name} label="Адрес" placeholder="Введите адрес" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                  )}
+                />
+              </Grid>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>
