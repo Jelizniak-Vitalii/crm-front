@@ -35,6 +35,15 @@ const RegistrationFormRender = ({ handleSubmit }: FormRenderProps) => {
 
         <Grid item xs={12}>
           <Field
+            name="city"
+            render={props => (
+              <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+            )}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Field
             name="email"
             render={props => (
               <TextField

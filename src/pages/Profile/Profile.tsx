@@ -35,9 +35,8 @@ const Profile = () => {
             <Grid item>
               {currentUser && (
                 <Grid container spacing={2} alignItems="center">
-                  {/*TODO: найти дефолтную заглушку для аватара*/}
                   <Grid item>
-                    <Avatar alt="avatar" src={currentUser.userImg ?? ''} sx={{ width: 75, height: 75 }} />
+                    <Avatar alt="avatar" src={currentUser.userImg ?? '/assets/avatar.png'} sx={{ width: 75, height: 75 }} />
                   </Grid>
 
                   <Grid item>

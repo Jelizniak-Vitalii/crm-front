@@ -73,7 +73,7 @@ const ImageDropzoneField: React.FC<ImageDropzoneFieldProps> = ({ input: { onChan
   };
 
   const { getRootProps, getInputProps } = useDropzone(dropzoneOptions);
-  console.log('value', value);
+
   return (
     <Box mt={2}>
       <FormControl fullWidth error={touched && !!error}>

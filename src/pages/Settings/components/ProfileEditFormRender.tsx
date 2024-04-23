@@ -1,7 +1,7 @@
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { Field, FormRenderProps } from 'react-final-form';
 import { Box } from '@mui/system';
-import ImageDropzoneField from '../../../shared/components/ImageDropzoneFormField.tsx';
+import ImageDropzoneField from '../../../shared/components/FormFields/ImageDropzoneFormField.tsx';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import React from 'react';
 
@@ -50,7 +50,16 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps) => {
                 <Field
                   name="lastName"
                   render={props => (
-                    <TextField name={props.input.name} label="Фамилия" placeholder="Введите фамилию" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
+                    <TextField
+                      name={props.input.name}
+                      label="Фамилия"
+                      placeholder="Введите фамилию"
+                      size="small"
+                      fullWidth
+                      value={props.input.value}
+                      onChange={props.input.onChange}
+                      {...props}
+                    />
                   )}
                 />
               </Grid>
