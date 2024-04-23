@@ -6,7 +6,7 @@ import { makeStyles } from 'tss-react/mui';
 const useStyles = makeStyles()(() => ({
   pageContent: {
     backgroundColor: '#f0f2f5',
-    height: '100%',
+    minHeight: '100%',
   },
 }));
 
@@ -23,7 +23,7 @@ const Page = ({ children, title, goBack, isLoading, loader }: PageProps) => {
 
   return (
     <Box className={classes.pageContent}>
-      <Grid paddingTop={3} paddingLeft={3} paddingRight={3}>
+      <Grid padding={3}>
         <Grid item xs={12}>
           <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
             {goBack && (

@@ -25,18 +25,14 @@ const AppMenu = () => {
         styles={{
           body: {
             '--MainNav-height': '56px',
-            '--SideNav-width': '230px',
-            '--MobileNav-width': '320px',
+            '--SideBar-width': '230px'
           }
         }}
       />
       <Box
         sx={{
-          // bgcolor: 'var(--mui-palette-common-white)',
-          bgcolor: 'var(--mui-palette-background-default)',
+          bgcolor: 'var(--mui-palette-common-white)',
           display: 'flex',
-          position: 'relative',
-          minHeight: '100%',
           height: '100%'
         }}
       >

@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
 import { NavIcons, navIcons } from './nav-icons.tsx';
+import { makeStyles } from 'tss-react/mui';
 
 const sideMenuItems: SideMenuItem[] = [
   { key: 'dashboard', title: 'Главная', href: '/dashboard', icon: NavIcons.ChartPie },
@@ -26,13 +27,52 @@ interface SideMenuItemProps extends SideMenuItem {
   pathname: string;
 }
 
+const useStyles = makeStyles()(() => ({
+  item: {
+    display: 'flex',
+    gap: 10,
+    borderRadius: 10,
+    color: 'var(--mui-palette-neutral-600)',
+    cursor: 'pointer',
+    padding: '6px 16px',
+    textDecoration: 'none',
+    whiteSpace: 'nowrap',
+    '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
+    '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
+    '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
+    '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
+    '&.active': {
+      color: 'var(--mui-palette-primary-contrastText)',
+      backgroundColor: 'var(--mui-palette-primary-main)'
+    },
+    '&:not(.active):hover': {
+      backgroundColor: 'var(--mui-palette-action-hover)'
+    }
+  },
+  title: {
+    color: 'inherit',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    lineHeight: '28px'
+  },
+  iconContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  icon: {}
+}));
+
 function NavItem({ disabled, external, href, icon, pathname, title }: SideMenuItemProps): React.JSX.Element {
+  const { classes } = useStyles();
+
   const active = !disabled && pathname === href;
   const Icon = icon ? navIcons[icon] : null;
 
   return (
     <li>
       <Box
+        className={classes.item}
         {...(href
           ? {
               component: external ? 'a' : NavLink,
@@ -43,31 +83,17 @@ function NavItem({ disabled, external, href, icon, pathname, title }: SideMenuIt
             }
           : { role: 'button' })}
         sx={{
-          alignItems: 'center',
-          borderRadius: 1,
-          color: 'var(--NavItem-color)',
-          cursor: 'pointer',
-          display: 'flex',
-          flex: '0 0 auto',
-          gap: 1,
-          p: '6px 16px',
-          position: 'relative',
-          textDecoration: 'none',
-          whiteSpace: 'nowrap',
           ...(disabled && {
             bgcolor: 'var(--NavItem-disabled-background)',
-            color: 'var(--NavItem-disabled-color)',
-            cursor: 'not-allowed',
             pointerEvents: 'none',
-          }),
-          ...(active && { bgcolor: 'var(--NavItem-active-background)', color: 'var(--NavItem-active-color)' }),
+          })
         }}
       >
-        <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', flex: '0 0 auto' }}>
-          {Icon ? <Icon fill={active ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'} fontSize="var(--icon-fontSize-md)" weight={active ? 'fill' : undefined} /> : null}
+        <Box className={classes.iconContainer}>
+          {Icon ? <Icon className={classes.icon} fill={active ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'} fontSize="var(--icon-fontSize-md)" weight={active ? 'fill' : undefined} /> : null}
         </Box>
-        <Box sx={{ flex: '1 1 auto' }}>
-          <Typography component="span" sx={{ color: 'inherit', fontSize: '0.875rem', fontWeight: 500, lineHeight: '28px' }}>
+        <Box>
+          <Typography component="span" className={classes.title}>
             {title}
           </Typography>
         </Box>
@@ -96,7 +122,7 @@ export function SideBarItems(): React.JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
+    <Box component="nav" sx={{ p: '12px' }}>
       {renderSideBarItems({ pathname, items: sideMenuItems })}
     </Box>
   );
