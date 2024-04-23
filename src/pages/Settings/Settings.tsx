@@ -1,6 +1,7 @@
-import Page from '../../shared/ui/Page.tsx';
-import { Card, Grid, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
+import { Card, Grid, Tab, Tabs } from '@mui/material';
+
+import Page from '../../shared/ui/Page.tsx';
 import ProfileEditForm from './components/ProfileEditForm.tsx';
 
 const Settings = () => {
@@ -13,7 +14,7 @@ const Settings = () => {
   return (
     <Page title="Настройки">
       <Card>
-        <Grid container spacing={4} padding={5}>
+        <Grid container spacing={4} padding={{ xs: 2, md: 5 }}>
           <Grid item xs={12}>
             <Tabs value={currentTabIndex} onChange={handleChangeTab}>
               <Tab label="Профиль" value={0} />

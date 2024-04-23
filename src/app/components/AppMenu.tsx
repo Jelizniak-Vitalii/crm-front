@@ -25,7 +25,7 @@ const AppMenu = () => {
         styles={{
           body: {
             '--MainNav-height': '56px',
-            '--SideBar-width': '230px'
+            '--SideBar-width': '200px'
           }
         }}
       />

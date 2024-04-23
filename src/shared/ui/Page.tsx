@@ -23,7 +23,7 @@ const Page = ({ children, title, goBack, isLoading, loader }: PageProps) => {
 
   return (
     <Box className={classes.pageContent}>
-      <Grid padding={3}>
+      <Grid padding={{ xs: 2, md: 4 }}>
         <Grid item xs={12}>
           <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
             {goBack && (
