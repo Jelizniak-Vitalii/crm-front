@@ -5,7 +5,7 @@ import { styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
 import { CreateServiceFormValues } from '../entities/FormValues.ts';
 import ImageDropzoneField from '../../../shared/components/FormFields/ImageDropzoneFormField.tsx';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import NumericField from '../../../shared/components/FormFields/NumericField.tsx';
 import { Spinner } from '@phosphor-icons/react';
 
@@ -63,15 +63,18 @@ const Textarea = styled(BaseTextareaAutosize)(
   `,
 );
 
-type CreateServiceFormRenderProps = FormRenderProps<CreateServiceFormValues>;
+type CreateServiceFormRenderProps = FormRenderProps<CreateServiceFormValues> & {
+  changeModalState: Dispatch<SetStateAction<boolean>>;
+};
 
-const CreateServiceFormRender = ({ handleSubmit, form, submitting }: CreateServiceFormRenderProps) => {
+const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalState }: CreateServiceFormRenderProps) => {
+  const { active: activeValue } = form.getState().values;
   return (
     <form noValidate onSubmit={handleSubmit}>
       <Stack spacing={5}>
         <Stack spacing={3}>
           <Stack spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-            <Field name="img" component={ImageDropzoneField} />
+            <Field name="img" component={ImageDropzoneField} variant="square" />
 
             <Button variant="outlined" size="small" onClick={() => form.change('image', undefined)}>
               Удалить
@@ -156,7 +159,8 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting }: CreateServi
             render={props => (
               <FormControlLabel
                 label="Активность"
-                control={<Checkbox checked={Boolean(props.input.value)} name={props.input.name} color="success" onChange={props.input.onChange} {...props} />}
+                name="active"
+                control={<Checkbox checked={Boolean(activeValue)} name={props.input.name} color="success" onChange={props.input.onChange} {...props} />}
               />
             )}
           />
@@ -173,7 +177,9 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting }: CreateServi
             Создать
           </Button>
 
-          <Button variant="outlined">Отменить</Button>
+          <Button variant="outlined" onClick={() => changeModalState(false)}>
+            Отменить
+          </Button>
         </Stack>
       </Stack>
     </form>

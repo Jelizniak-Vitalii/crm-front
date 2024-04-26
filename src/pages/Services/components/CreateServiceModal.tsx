@@ -1,4 +1,4 @@
-import { Card, CardContent, Modal, Stack, Typography } from '@mui/material';
+import { Backdrop, Card, CardContent, Fade, Modal, Stack, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
 import { Dispatch, SetStateAction } from 'react';
 import CreateServiceFormRender from './CreateServiceFormRender.tsx';
@@ -34,16 +34,33 @@ const CreateServiceModal = ({ isOpen, changeModalState }: CreateServiceModalProp
   };
 
   return (
-    <Modal open={isOpen} onClose={changeModalState}>
-      <Card sx={{ ...style, width: 500 }} elevation={1}>
-        <CardContent>
-          <Stack spacing={2}>
-            <Typography variant="h4">Создание новой услуги</Typography>
+    <Modal
+      open={isOpen}
+      onClose={changeModalState}
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 200,
+        },
+      }}
+    >
+      <Fade in={isOpen}>
+        <Card sx={{ ...style, width: 500 }} elevation={1}>
+          <CardContent>
+            <Stack spacing={2}>
+              <Typography variant="h4">Создание новой услуги</Typography>
 
-            <Form<CreateServiceFormValues> onSubmit={handleSubmit} render={props => <CreateServiceFormRender submitting={isLoadingCreateService} {...props} />} />
-          </Stack>
-        </CardContent>
-      </Card>
+              <Form<CreateServiceFormValues>
+                onSubmit={handleSubmit}
+                render={props => <CreateServiceFormRender submitting={isLoadingCreateService} changeModalState={changeModalState} {...props} />}
+              />
+            </Stack>
+          </CardContent>
+        </Card>
+      </Fade>
     </Modal>
   );
 };
