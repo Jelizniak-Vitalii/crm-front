@@ -1,14 +1,20 @@
 import Page from '../../shared/ui/Page.tsx';
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { Plus } from '@phosphor-icons/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import CreateServiceModal from './components/CreateServiceModal.tsx';
-import { useGetAllCategoriesWithServicesQuery } from '../../modules/Services/ServicesApi.ts';
+import AccordionCategoryItem from './components/AccordionCategoryItem.tsx';
+import { useGetAllCategoriesWithServicesQuery } from '../../modules/Categories/CategoriesApi.ts';
 
 const Services = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState<string | false>(false);
 
   const { data: categoriesWithServices, isFetching: isFetchingCategoriesWithServices } = useGetAllCategoriesWithServicesQuery();
+
+  const handleChangeExpandedCategory = (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpandedCategory(isExpanded ? panel : false);
+  };
 
   const handleChangeModalState = () => {
     setIsOpenModal(prevState => !prevState);
@@ -23,7 +29,7 @@ const Services = () => {
           </Button>
         </Grid>
 
-        <Grid item>
+        <Grid item xs={12}>
           {isFetchingCategoriesWithServices ? (
             <Grid container justifyContent="center">
               {/* TODO: заменить на спиннер*/}
@@ -31,23 +37,11 @@ const Services = () => {
             </Grid>
           ) : (
             <Grid container spacing={2}>
-              {/*{services?.map(({ id, serviceName, price }) => (*/}
-              {/*  <Grid item key={id}>*/}
-              {/*    <Card>*/}
-              {/*      <CardContent>*/}
-              {/*        <Grid container>*/}
-              {/*          <Grid item>*/}
-              {/*            <Typography>{serviceName}</Typography>*/}
-              {/*          </Grid>*/}
-
-              {/*          <Grid item>*/}
-              {/*            <Typography>{price}</Typography>*/}
-              {/*          </Grid>*/}
-              {/*        </Grid>*/}
-              {/*      </CardContent>*/}
-              {/*    </Card>*/}
-              {/*  </Grid>*/}
-              {/*))}*/}
+              {categoriesWithServices?.map(categoryWithService => (
+                <Grid item xs={12} key={categoryWithService.id}>
+                  <AccordionCategoryItem categoryWithService={categoryWithService} expanded={expandedCategory} onChange={handleChangeExpandedCategory} />
+                </Grid>
+              ))}
             </Grid>
           )}
         </Grid>

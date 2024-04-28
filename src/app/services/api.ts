@@ -1,7 +1,27 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
+import { isString, values } from 'lodash';
 
 const BASE_URL = 'http://195.133.79.233';
+
+type ApiTagStructure = {
+  [K in string]: string | ApiTagStructure;
+};
+
+export const ApiTag = {
+  Services: {
+    Services: 'Services',
+    Categories: 'Categories',
+    CategoriesWithServices: 'CategoriesWithServices',
+  },
+  User: {
+    CurrentUser: 'CurrentUser',
+  },
+} as const;
+
+const getTags = (value: ApiTagStructure): string[] => values(value).flatMap(item => (isString(item) ? item : getTags(item)));
+
+const tagTypes = getTags(ApiTag);
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${BASE_URL}/api`,
@@ -21,5 +41,6 @@ export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithRetry,
   refetchOnMountOrArgChange: true,
+  tagTypes,
   endpoints: () => ({}),
 });

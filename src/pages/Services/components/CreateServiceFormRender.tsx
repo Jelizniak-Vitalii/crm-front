@@ -12,6 +12,7 @@ import { Autocomplete } from '@mui/lab';
 
 import { kepple } from '../../../styles/theme/colors.ts';
 import { ClearIcon } from '@mui/x-date-pickers';
+import { useGetAllCategoriesQuery } from '../../../modules/Categories/CategoriesApi.ts';
 
 const blue = {
   100: '#DAECFF',
@@ -76,18 +77,13 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
   const categoryNameRef = useRef<HTMLDivElement | null>(null);
   const categorySelectRef = useRef<HTMLDivElement | null>(null);
 
-  const { active: activeValue, onlineBooking: onlineBookingValue, newImage, categoryId } = form.getState().values;
+  const { active: activeValue, onlineBooking: onlineBookingValue, image, categoryId } = form.getState().values;
 
-  const categoriesOptions = useMemo(
-    () => [
-      { label: '+ Создать свою категорию', value: 0 },
-      { label: 'Категория 1', value: 1 },
-      { label: 'Категория 2', value: 2 },
-      { label: 'Категория 3', value: 3 },
-      { label: 'Категория4', value: 4 },
-    ],
-    [],
-  );
+  const { data: categories, isFetching: isFetchingCategories } = useGetAllCategoriesQuery();
+  const categoriesOptions = useMemo(() => {
+    const mapcategoriesOptions = categories?.map(({ categoryName, id }) => ({ label: categoryName, value: id })) ?? [];
+    return [{ label: '+ Создать свою категорию', value: 0 }, ...mapcategoriesOptions];
+  }, [categories]);
 
   const handleClearNewCategory = () => {
     setIsNewCategoryCreating(false);
@@ -102,9 +98,9 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
       <Stack spacing={5}>
         <Stack spacing={3}>
           <Stack spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-            <Field name="newImage" component={ImageDropzoneField} variant="square" />
+            <Field name="image" component={ImageDropzoneField} variant="square" />
 
-            <Button variant="outlined" size="small" disabled={!newImage} onClick={() => form.change('newImage', undefined)}>
+            <Button variant="outlined" size="small" disabled={!image} onClick={() => form.change('image', undefined)}>
               Удалить
             </Button>
           </Stack>
@@ -159,6 +155,8 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
                   value={categoriesOptions.find(option => option.value === categoryId) ?? null}
                   freeSolo
                   options={categoriesOptions}
+                  disabled={isFetchingCategories}
+                  loading={isFetchingCategories}
                   openOnFocus
                   fullWidth
                   size="small"
@@ -186,6 +184,9 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
                       }, 0);
 
                       form.change('categoryId', undefined);
+                      return;
+                    } else if (typeof value === 'object' && value?.value) {
+                      form.change('categoryId', value.value);
                     }
                   }}
                   {...props}

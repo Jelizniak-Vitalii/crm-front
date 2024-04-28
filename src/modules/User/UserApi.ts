@@ -1,4 +1,4 @@
-import { api } from '../../app/services/api.ts';
+import { api, ApiTag } from '../../app/services/api.ts';
 import { User } from './types/user.ts';
 
 export type UserResponse = User;
@@ -9,13 +9,14 @@ export type UpdateUserProfilePayload = Partial<Pick<User, 'firstName' | 'lastNam
 
 export const UserApi = api.injectEndpoints({
   endpoints: builder => ({
-    getCurrentUser: builder.query<UserResponse, void>({ query: () => '/users/currentUser' }),
+    getCurrentUser: builder.query<UserResponse, void>({ query: () => '/users/currentUser', providesTags: [ApiTag.User.CurrentUser] }),
     updateUserProfile: builder.mutation<unknown, UpdateUserProfilePayload>({
       query: body => ({
         url: '/users/update',
         method: 'POST',
         body,
       }),
+      invalidatesTags: [ApiTag.User.CurrentUser],
     }),
   }),
 });

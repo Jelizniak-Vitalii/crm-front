@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Button, Checkbox, CircularProgress, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { Field, FormRenderProps } from 'react-final-form';
 import { Box } from '@mui/system';
 import ImageDropzoneField from '../../../shared/components/FormFields/ImageDropzoneFormField.tsx';
@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import React from 'react';
 import { ProfileFormValues } from '../entities/ProfileEditForm.ts';
 
-const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps<ProfileFormValues>) => {
+const ProfileEditFormRender = ({ handleSubmit, form, submitting }: FormRenderProps<ProfileFormValues>) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const { active: activeValue, onlineBooking: onlineBookingValue } = form.getState().values;
@@ -178,7 +178,7 @@ const ProfileEditFormRender = ({ handleSubmit, form }: FormRenderProps<ProfileFo
           <Grid item xs={12}>
             <Grid container>
               <Grid item>
-                <Button variant="contained" type="submit">
+                <Button variant="contained" type="submit" disabled={submitting} startIcon={submitting ? <CircularProgress size={20} /> : undefined}>
                   Сохранить
                 </Button>
               </Grid>

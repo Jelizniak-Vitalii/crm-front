@@ -1,4 +1,4 @@
-import { api } from '../../app/services/api.ts';
+import { api, ApiTag } from '../../app/services/api.ts';
 
 export type CreateServicePayload = {
   serviceName: string;
@@ -10,13 +10,12 @@ export type CreateServicePayload = {
   image?: string;
   active?: boolean;
   onlineBooking?: string;
-  newImage?: string;
   userIds?: string[];
 };
 
 export type CreateServiceResponse = unknown;
 
-type Service = {
+export type Service = {
   updatedAt: string;
   createdAt: string;
   id: number;
@@ -26,6 +25,7 @@ type Service = {
   price: string;
   duration: string;
   description: string;
+  onlineBooking: string;
   image: string;
   active: boolean;
 };
@@ -38,10 +38,10 @@ export const ServicesApi = api.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: [ApiTag.Services.CategoriesWithServices],
     }),
     getAllServices: builder.query<Service[], void>({ query: () => '/services/services' }),
-    getAllCategoriesWithServices: builder.query<any, void>({ query: () => '/categories/categories' }),
   }),
 });
 
-export const { useCreateServiceMutation, useGetAllServicesQuery, useGetAllCategoriesWithServicesQuery } = ServicesApi;
+export const { useCreateServiceMutation, useGetAllServicesQuery } = ServicesApi;
