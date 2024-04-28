@@ -1,13 +1,17 @@
 import { Field, FormRenderProps } from 'react-final-form';
-import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, IconButton, InputAdornment, TextField } from '@mui/material';
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-import { styled } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
 import { CreateServiceFormValues } from '../entities/FormValues.ts';
 import ImageDropzoneField from '../../../shared/components/FormFields/ImageDropzoneFormField.tsx';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import NumericField from '../../../shared/components/FormFields/NumericField.tsx';
 import { Spinner } from '@phosphor-icons/react';
+import { Autocomplete } from '@mui/lab';
+
+import { kepple } from '../../../styles/theme/colors.ts';
+import { ClearIcon } from '@mui/x-date-pickers';
 
 const blue = {
   100: '#DAECFF',
@@ -64,19 +68,43 @@ const Textarea = styled(BaseTextareaAutosize)(
 );
 
 type CreateServiceFormRenderProps = FormRenderProps<CreateServiceFormValues> & {
-  changeModalState: Dispatch<SetStateAction<boolean>>;
+  changeModalState: () => void;
 };
 
 const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalState }: CreateServiceFormRenderProps) => {
-  const { active: activeValue } = form.getState().values;
+  const [isNewCategoryCreating, setIsNewCategoryCreating] = useState(false);
+  const categoryNameRef = useRef<HTMLDivElement | null>(null);
+  const categorySelectRef = useRef<HTMLDivElement | null>(null);
+
+  const { active: activeValue, onlineBooking: onlineBookingValue, newImage, categoryId } = form.getState().values;
+
+  const categoriesOptions = useMemo(
+    () => [
+      { label: '+ Создать свою категорию', value: 0 },
+      { label: 'Категория 1', value: 1 },
+      { label: 'Категория 2', value: 2 },
+      { label: 'Категория 3', value: 3 },
+      { label: 'Категория4', value: 4 },
+    ],
+    [],
+  );
+
+  const handleClearNewCategory = () => {
+    setIsNewCategoryCreating(false);
+    form.change('categoryName', undefined);
+    setTimeout(() => {
+      categorySelectRef?.current?.focus();
+    }, 0);
+  };
+
   return (
     <form noValidate onSubmit={handleSubmit}>
       <Stack spacing={5}>
         <Stack spacing={3}>
           <Stack spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-            <Field name="img" component={ImageDropzoneField} variant="square" />
+            <Field name="newImage" component={ImageDropzoneField} variant="square" />
 
-            <Button variant="outlined" size="small" onClick={() => form.change('image', undefined)}>
+            <Button variant="outlined" size="small" disabled={!newImage} onClick={() => form.change('newImage', undefined)}>
               Удалить
             </Button>
           </Stack>
@@ -97,24 +125,74 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
             )}
           />
 
-          <Field
-            name="categoryId"
-            render={props => (
-              <TextField
-                name={props.input.name}
-                InputProps={{
-                  inputComponent: NumericField as never,
-                }}
-                label="Временная категория"
-                placeholder="Введите айди категории"
-                size="small"
-                fullWidth
-                value={props.input.value}
-                onChange={props.input.onChange}
-                {...props}
-              />
-            )}
-          />
+          {isNewCategoryCreating ? (
+            <Field
+              name="categoryName"
+              render={props => (
+                <TextField
+                  inputRef={categoryNameRef}
+                  name={props.input.name}
+                  label="Категория"
+                  placeholder="Введите название новой категории"
+                  size="small"
+                  fullWidth
+                  value={props.input.value}
+                  onChange={props.input.onChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleClearNewCategory} edge="end">
+                          <ClearIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  {...props}
+                />
+              )}
+            />
+          ) : (
+            <Field
+              name="categoryId"
+              render={props => (
+                <Autocomplete
+                  value={categoriesOptions.find(option => option.value === categoryId) ?? null}
+                  freeSolo
+                  options={categoriesOptions}
+                  openOnFocus
+                  fullWidth
+                  size="small"
+                  renderInput={params => <TextField inputRef={categorySelectRef} {...params} label="Категория" />}
+                  renderOption={(props, option) => {
+                    if (option.value === 0) {
+                      return (
+                        <Box component="li" color={kepple[600]} fontWeight="bolder" {...props}>
+                          {option.label}
+                        </Box>
+                      );
+                    }
+
+                    return (
+                      <Box component="li" {...props}>
+                        {option.label}
+                      </Box>
+                    );
+                  }}
+                  onChange={(_, value) => {
+                    if (typeof value === 'object' && value?.value === 0) {
+                      setIsNewCategoryCreating(true);
+                      setTimeout(() => {
+                        categoryNameRef?.current?.focus();
+                      }, 0);
+
+                      form.change('categoryId', undefined);
+                    }
+                  }}
+                  {...props}
+                />
+              )}
+            />
+          )}
 
           <Field
             name="price"
@@ -153,17 +231,31 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
             )}
           />
 
-          <Field
-            name="active"
-            type="checkbox"
-            render={props => (
-              <FormControlLabel
-                label="Активность"
-                name="active"
-                control={<Checkbox checked={Boolean(activeValue)} name={props.input.name} color="success" onChange={props.input.onChange} {...props} />}
-              />
-            )}
-          />
+          <Stack direction="row" spacing={2}>
+            <Field
+              name="active"
+              type="checkbox"
+              render={props => (
+                <FormControlLabel
+                  label="Активность"
+                  name="active"
+                  control={<Checkbox checked={Boolean(activeValue)} name={props.input.name} color="success" onChange={props.input.onChange} {...props} />}
+                />
+              )}
+            />
+
+            <Field
+              name="onlineBooking"
+              type="checkbox"
+              render={props => (
+                <FormControlLabel
+                  label="Запись онлайн"
+                  name="onlineBooking"
+                  control={<Checkbox checked={Boolean(onlineBookingValue)} name={props.input.name} color="primary" onChange={props.input.onChange} {...props} />}
+                />
+              )}
+            />
+          </Stack>
 
           {/* TODO: Допилить стиль текстэрии под общий стиль*/}
           <Field
@@ -177,7 +269,7 @@ const CreateServiceFormRender = ({ handleSubmit, form, submitting, changeModalSt
             Создать
           </Button>
 
-          <Button variant="outlined" onClick={() => changeModalState(false)}>
+          <Button variant="outlined" onClick={changeModalState}>
             Отменить
           </Button>
         </Stack>

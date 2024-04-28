@@ -41,10 +41,10 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       ) : (
         <Box sx={{ p: '16px 20px ' }}>
           <Typography variant="subtitle1">
-            {currentUser.firstName} {currentUser.lastName}
+            {currentUser?.firstName} {currentUser?.lastName}
           </Typography>
           <Typography color="text.secondary" variant="body2">
-            {currentUser.email}
+            {currentUser?.email}
           </Typography>
         </Box>
       )}

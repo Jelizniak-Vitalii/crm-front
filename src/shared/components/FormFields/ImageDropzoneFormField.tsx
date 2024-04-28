@@ -5,6 +5,7 @@ import { FormControl, FormHelperText, Box, Avatar } from '@mui/material';
 import ImageCompressor from 'image-compressor.js';
 import { makeStyles } from 'tss-react/mui';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
+import PhotoIcon from '@mui/icons-material/Photo';
 
 interface ImageDropzoneFieldProps extends FieldRenderProps<string, HTMLElement> {
   variant?: 'circular' | 'rounded' | 'square';
@@ -104,7 +105,9 @@ const ImageDropzoneField = ({ input: { onChange, value }, meta: { touched, error
       <FormControl fullWidth error={touched && !!error}>
         <div {...getRootProps()} className={classes.avatarWrapper}>
           <input {...getInputProps()} />
-          <Avatar className={classes.avatar} src={value ?? ''} variant={variant} />
+          <Avatar className={classes.avatar} src={value ?? ''} variant={variant}>
+            {variant === 'square' ? <PhotoIcon fontSize="large" /> : null}
+          </Avatar>
           <CameraIcon className={`${classes.cameraIcon} cameraIcon`} />
         </div>
         {touched && error && <FormHelperText>{error}</FormHelperText>}

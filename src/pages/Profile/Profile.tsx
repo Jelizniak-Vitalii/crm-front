@@ -36,7 +36,7 @@ const Profile = () => {
               {currentUser && (
                 <Grid container spacing={2} alignItems="center">
                   <Grid item>
-                    <Avatar alt="avatar" src={currentUser.userImg ?? '/assets/avatar.png'} sx={{ width: 75, height: 75 }} />
+                    <Avatar alt="avatar" src={currentUser.image ?? '/assets/avatar.png'} sx={{ width: 75, height: 75 }} />
                   </Grid>
 
                   <Grid item>

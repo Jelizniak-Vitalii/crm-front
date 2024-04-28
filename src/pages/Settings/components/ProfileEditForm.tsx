@@ -1,12 +1,10 @@
 import { Form } from 'react-final-form';
 import ProfileEditFormRender from './ProfileEditFormRender.tsx';
-import { User } from '../../../modules/User/types/user.ts';
-import { UpdateUserProfilePayload, useUpdateUserProfileMutation } from '../../../modules/User/UserApi.ts';
+import { useUpdateUserProfileMutation } from '../../../modules/User/UserApi.ts';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../Auth/slice/userSlice.ts';
 import { useMemo } from 'react';
-
-type ProfileFormValues = Partial<Pick<User, 'firstName' | 'lastName' | 'email' | 'phone' | 'city' | 'address'>>;
+import { ProfileFormValues } from '../entities/ProfileEditForm.ts';
 
 const ProfileEditForm = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -21,27 +19,23 @@ const ProfileEditForm = () => {
         phone: currentUser.phone,
         email: currentUser.email,
         active: currentUser.active,
-        city: currentUser.city,
-        address: currentUser.address,
-        userImg: currentUser.userImg
+        image: currentUser.image,
       };
     }
 
     return {};
   }, [currentUser]);
 
-  //TODO: добавить нотификацию после успешного апдейта "Данные пользователя успешно обновлены"
   const handleSubmit = (newValues: ProfileFormValues) => {
-    console.log('currentUser', currentUser);
-    console.log('newValues', newValues);
     if (currentUser?.id) {
-      if (newValues.phone && newValues.email && newValues.firstName && newValues.lastName) {
-        updateUserProfile({ ...currentUser, ...newValues } as UpdateUserProfilePayload);
+      if (newValues.email && newValues.firstName && newValues.lastName) {
+        //TODO: добавить нотификацию после успешного апдейта "Данные пользователя успешно обновлены"
+        updateUserProfile({ id: currentUser.id, ...newValues });
       }
     }
   };
 
-  return <Form onSubmit={handleSubmit} initialValues={initialValues} render={props => <ProfileEditFormRender {...props} submitting={isLoadingUpdateUserProfile} />} />;
+  return <Form<ProfileFormValues> onSubmit={handleSubmit} initialValues={initialValues} render={props => <ProfileEditFormRender {...props} submitting={isLoadingUpdateUserProfile} />} />;
 };
 
 export default ProfileEditForm;

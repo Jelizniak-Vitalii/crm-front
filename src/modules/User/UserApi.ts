@@ -3,9 +3,8 @@ import { User } from './types/user.ts';
 
 export type UserResponse = User;
 
-export type UpdateUserProfilePayload = Pick<User, 'firstName' | 'lastName' | 'phone' | 'id'> & {
-  city?: string;
-  address?: string;
+export type UpdateUserProfilePayload = Partial<Pick<User, 'firstName' | 'lastName' | 'phone' | 'id' | 'email' | 'password' | 'active' | 'onlineBooking' | 'position'>> & {
+  newImage?: string;
 };
 
 export const UserApi = api.injectEndpoints({

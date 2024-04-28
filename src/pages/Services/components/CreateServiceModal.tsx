@@ -1,9 +1,8 @@
 import { Backdrop, Card, CardContent, Fade, Modal, Stack, Typography } from '@mui/material';
 import { Form } from 'react-final-form';
-import { Dispatch, SetStateAction } from 'react';
 import CreateServiceFormRender from './CreateServiceFormRender.tsx';
 import { CreateServiceFormValues } from '../entities/FormValues.ts';
-import { useCreateServiceMutation } from '../../../modules/Services/ServicesApi.ts';
+import { CreateServicePayload, useCreateServiceMutation } from '../../../modules/Services/ServicesApi.ts';
 
 // TODO: переделать на makeStyle
 const style = {
@@ -22,14 +21,18 @@ const style = {
 
 type CreateServiceModalProps = {
   isOpen: boolean;
-  changeModalState: Dispatch<SetStateAction<boolean>>;
+  changeModalState: () => void;
 };
 
 const CreateServiceModal = ({ isOpen, changeModalState }: CreateServiceModalProps) => {
   const [createService, { isLoading: isLoadingCreateService }] = useCreateServiceMutation();
   const handleSubmit = (values: CreateServiceFormValues) => {
-    if (values.serviceName) {
-      createService({ ...values, categoryId: Number(values.categoryId) });
+    if (values?.serviceName) {
+      createService({ ...values } as CreateServicePayload)
+        .unwrap()
+        .then(() => {
+          changeModalState();
+        });
     }
   };
 
@@ -55,7 +58,7 @@ const CreateServiceModal = ({ isOpen, changeModalState }: CreateServiceModalProp
 
               <Form<CreateServiceFormValues>
                 onSubmit={handleSubmit}
-                render={props => <CreateServiceFormRender submitting={isLoadingCreateService} changeModalState={changeModalState} {...props} />}
+                render={props => <CreateServiceFormRender {...props} submitting={isLoadingCreateService} changeModalState={changeModalState} />}
               />
             </Stack>
           </CardContent>

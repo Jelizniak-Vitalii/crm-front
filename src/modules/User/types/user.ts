@@ -1,11 +1,15 @@
 export type User = {
   id: number;
+  firstName: string;
+  lastName: string;
+  image: string | null;
   email: string;
   password: string;
   phone: string;
-  firstName: string;
-  lastName: string;
-  city?: string;
-  address?: string | null;
+  active: boolean;
+  onlineBooking: boolean;
+  position: string;
   role_id: number;
+  updatedAt?: string;
+  createdAt?: string;
 };

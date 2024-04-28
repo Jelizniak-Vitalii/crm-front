@@ -1,11 +1,14 @@
 import Page from '../../shared/ui/Page.tsx';
-import { Button, Grid, Paper } from '@mui/material';
+import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import { Plus } from '@phosphor-icons/react';
 import { useState } from 'react';
 import CreateServiceModal from './components/CreateServiceModal.tsx';
+import { useGetAllCategoriesWithServicesQuery } from '../../modules/Services/ServicesApi.ts';
 
 const Services = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const { data: categoriesWithServices, isFetching: isFetchingCategoriesWithServices } = useGetAllCategoriesWithServicesQuery();
 
   const handleChangeModalState = () => {
     setIsOpenModal(prevState => !prevState);
@@ -21,7 +24,32 @@ const Services = () => {
         </Grid>
 
         <Grid item>
-          <Paper>Здесь будет список услуг</Paper>
+          {isFetchingCategoriesWithServices ? (
+            <Grid container justifyContent="center">
+              {/* TODO: заменить на спиннер*/}
+              <Grid item>Loading...</Grid>
+            </Grid>
+          ) : (
+            <Grid container spacing={2}>
+              {/*{services?.map(({ id, serviceName, price }) => (*/}
+              {/*  <Grid item key={id}>*/}
+              {/*    <Card>*/}
+              {/*      <CardContent>*/}
+              {/*        <Grid container>*/}
+              {/*          <Grid item>*/}
+              {/*            <Typography>{serviceName}</Typography>*/}
+              {/*          </Grid>*/}
+
+              {/*          <Grid item>*/}
+              {/*            <Typography>{price}</Typography>*/}
+              {/*          </Grid>*/}
+              {/*        </Grid>*/}
+              {/*      </CardContent>*/}
+              {/*    </Card>*/}
+              {/*  </Grid>*/}
+              {/*))}*/}
+            </Grid>
+          )}
         </Grid>
       </Grid>
 
