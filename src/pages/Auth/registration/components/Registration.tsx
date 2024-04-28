@@ -4,13 +4,7 @@ import { RegistrationPayload, useRegisterMutation } from '../../../../modules/Au
 import RegistrationFormRender from './RegistrationFormRender.tsx';
 import CustomNavLink from '../../../../shared/ui/CustomNavLink.tsx';
 import { useNavigate } from 'react-router-dom';
-
-type RegistrationFormValues = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-};
+import { RegistrationFormValues } from '../entities/RegistrationFormValues.ts';
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -18,7 +12,7 @@ const Registration = () => {
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
 
   const handleSubmit = async (values: RegistrationFormValues) => {
-    if (values.password !== undefined && values.email !== undefined) {
+    if (values.email && values.password) {
       await register(values as RegistrationPayload)
         .unwrap()
         .then(() => {
@@ -51,7 +45,7 @@ const Registration = () => {
                 </Grid>
 
                 <Grid item>
-                  <CustomNavLink to={'/login'} linkText="Войти" underline="hover" />
+                  <CustomNavLink to="/login" linkText="Войти" underline="hover" />
                 </Grid>
               </Grid>
             </Grid>

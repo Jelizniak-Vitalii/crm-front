@@ -2,8 +2,9 @@ import { Field, FormRenderProps } from 'react-final-form';
 import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import React from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { RegistrationFormValues } from '../entities/RegistrationFormValues.ts';
 
-const RegistrationFormRender = ({ handleSubmit }: FormRenderProps) => {
+const RegistrationFormRender = ({ handleSubmit }: FormRenderProps<RegistrationFormValues>) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
@@ -35,21 +36,35 @@ const RegistrationFormRender = ({ handleSubmit }: FormRenderProps) => {
 
         <Grid item xs={12}>
           <Field
-            name="city"
-            render={props => (
-              <TextField name={props.input.name} label="Город" placeholder="Введите город" size="small" fullWidth value={props.input.value} onChange={props.input.onChange} {...props} />
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Field
             name="email"
             render={props => (
               <TextField
                 name={props.input.name}
                 label="Электронная почта"
                 placeholder="Введите email"
+                size="small"
+                fullWidth
+                value={props.input.value}
+                onChange={props.input.onChange}
+                {...props}
+              />
+            )}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Field
+            name="phone"
+            render={props => (
+              <TextField
+                name={props.input.name}
+                label="Контактный номер"
+                placeholder="Введите номер телефона"
+                inputProps={{
+                  maxLength: 10, // Максимальная длина ввода
+                  pattern: '[0-9]*', // Шаблон для ограничения ввода только цифрами
+                  inputMode: 'numeric', // Режим ввода, чтобы отображать числовую клавиатуру на мобильных устройствах
+                }}
                 size="small"
                 fullWidth
                 value={props.input.value}

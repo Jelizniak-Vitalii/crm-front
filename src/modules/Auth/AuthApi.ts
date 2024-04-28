@@ -11,7 +11,6 @@ export type LoginResponse = {
 
 export type RegistrationPayload = {
   email: string;
-  city: string;
   password: string;
   firstName?: string;
   lastName?: string;
